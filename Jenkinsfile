@@ -4,17 +4,13 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("my-node-app")
-                }
+                sh 'docker build -t my-node-app .'
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                script {
-                    sh "docker run -d -p 3000:3000 my-node-app"
-                }
+                sh 'docker run -d -p 3000:3000 --name my-node-container my-node-app || true'
             }
         }
     }
